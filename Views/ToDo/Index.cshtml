@@ -1,12 +1,29 @@
 ﻿@model IEnumerable<ToDo>
 
-    <h1>ToDos</h1>
-    <p>@Model.ToList().Count tarefas cadastradas</p>
-    <a asp-action="Cadastro" class="btn btn-primary">Cadastrar</a>
+<h1>ToDos</h1>
+<p>@Model.ToList().Count tarefas cadastradas</p>
+<a asp-action="Cadastro" class="btn btn-primary mb-3">Cadastrar</a>
 
-    <ul>
-    @foreach(var todo in Model)
-    {
-        <li>@todo.Titulo - @todo.Usuario.Nome - @todo.DataCriacao.ToShortDateString()</li>
-    }
-    </ul>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Usuario</th>
+            <th>Título</th>
+            <th>Criado em</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var toDo in Model)
+        {
+            <tr>
+                <td>@toDo.Usuario.Nome</td>
+                <td>@toDo.Titulo</td>
+                <td>@toDo.DataCriacao.Day/@toDo.DataCriacao.Month/@toDo.DataCriacao.Year</td>
+                <td>@toDo.Status</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

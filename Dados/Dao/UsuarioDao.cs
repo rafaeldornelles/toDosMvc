@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,7 +21,7 @@ namespace toDosMvc.Dados.Dao
 
         public Usuario BuscarPorId(int id)
         {
-            return _dbset.Find(id);
+            return _dbset.Include(u=>u.ToDos).FirstOrDefault(u=>u.Id == id);
         }
 
         public void Delete(Usuario usuario)
@@ -31,7 +32,7 @@ namespace toDosMvc.Dados.Dao
 
         public IEnumerable<Usuario> Listar()
         {
-            return _dbset;
+            return _dbset.Include(u=>u.ToDos);
         }
 
         public void Update(Usuario usuario)
