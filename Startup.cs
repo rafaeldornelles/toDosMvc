@@ -9,7 +9,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using toDosMvc.Dados;
+using toDosMvc.Dados.Dao;
 using toDosMvc.Models;
+using toDosMvc.Services;
 
 namespace toDosMvc
 {
@@ -28,10 +31,17 @@ namespace toDosMvc
             services.AddControllersWithViews();
             services.AddDistributedMemoryCache();
             services.AddSession();
+
             string conn = Configuration.GetConnectionString("Default");
             services.AddDbContext<ApplicationContext>(options => {
                 options.UseSqlite(conn);
             });
+
+            services.AddScoped<IUsuarioDao, UsuarioDao>();
+            services.AddScoped<IToDoDao, ToDoDao>();
+
+            services.AddScoped<IUsuarioService, DefaultUsuarioService>();
+            services.AddScoped<IToDoService, DefaultToDoService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

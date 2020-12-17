@@ -1,0 +1,10 @@
+﻿@model IEnumerable<Usuario>
+
+    <h1>Usuarios</h1>
+    <p>@Model.ToList().Count usuarios cadastrados.</p>
+    <ul>
+        @foreach(var usuario in Model)
+        {
+            <li>@usuario.Nome - @usuario.ToDos.Count</li>
+        }
+    </ul>

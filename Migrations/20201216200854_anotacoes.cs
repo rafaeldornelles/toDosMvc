@@ -3,22 +3,22 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace toDosMvc.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class anotacoes : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Pessoas",
+                name: "Usuarios",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Nome = table.Column<string>(type: "TEXT", nullable: true),
+                    Nome = table.Column<string>(type: "TEXT", nullable: false),
                     sexo = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pessoas", x => x.Id);
+                    table.PrimaryKey("PK_Usuarios", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -27,17 +27,19 @@ namespace toDosMvc.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Titulo = table.Column<string>(type: "TEXT", nullable: true),
-                    DataLimite = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Titulo = table.Column<string>(type: "TEXT", nullable: false),
+                    Conteudo = table.Column<string>(type: "TEXT", nullable: true),
+                    DataCriacao = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Status = table.Column<int>(type: "INTEGER", nullable: false),
                     UsuarioId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ToDos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ToDos_Pessoas_UsuarioId",
+                        name: "FK_ToDos_Usuarios_UsuarioId",
                         column: x => x.UsuarioId,
-                        principalTable: "Pessoas",
+                        principalTable: "Usuarios",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -54,7 +56,7 @@ namespace toDosMvc.Migrations
                 name: "ToDos");
 
             migrationBuilder.DropTable(
-                name: "Pessoas");
+                name: "Usuarios");
         }
     }
 }

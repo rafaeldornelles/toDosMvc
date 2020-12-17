@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using toDosMvc.Models;
+using toDosMvc.Dados;
 
 namespace toDosMvc.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20201216013612_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20201216200854_anotacoes")]
+    partial class anotacoes
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -18,33 +18,23 @@ namespace toDosMvc.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "5.0.1");
 
-            modelBuilder.Entity("toDosMvc.Models.Pessoa", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Nome")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("sexo")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Pessoas");
-                });
-
             modelBuilder.Entity("toDosMvc.Models.ToDo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("DataLimite")
+                    b.Property<string>("Conteudo")
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Titulo")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("UsuarioId")
@@ -57,9 +47,27 @@ namespace toDosMvc.Migrations
                     b.ToTable("ToDos");
                 });
 
+            modelBuilder.Entity("toDosMvc.Models.Usuario", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("sexo")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Usuarios");
+                });
+
             modelBuilder.Entity("toDosMvc.Models.ToDo", b =>
                 {
-                    b.HasOne("toDosMvc.Models.Pessoa", "Usuario")
+                    b.HasOne("toDosMvc.Models.Usuario", "Usuario")
                         .WithMany("ToDos")
                         .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -68,7 +76,7 @@ namespace toDosMvc.Migrations
                     b.Navigation("Usuario");
                 });
 
-            modelBuilder.Entity("toDosMvc.Models.Pessoa", b =>
+            modelBuilder.Entity("toDosMvc.Models.Usuario", b =>
                 {
                     b.Navigation("ToDos");
                 });

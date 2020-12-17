@@ -1,0 +1,12 @@
+﻿@model IEnumerable<ToDo>
+
+    <h1>ToDos</h1>
+    <p>@Model.ToList().Count tarefas cadastradas</p>
+    <a asp-action="Cadastro" class="btn btn-primary">Cadastrar</a>
+
+    <ul>
+    @foreach(var todo in Model)
+    {
+        <li>@todo.Titulo - @todo.Usuario.Nome - @todo.DataCriacao.ToShortDateString()</li>
+    }
+    </ul>
